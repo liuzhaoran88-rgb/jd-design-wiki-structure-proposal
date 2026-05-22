@@ -851,6 +851,32 @@
       line-height: 1.62;
     }
 
+    .code-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .code-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .code-card.one {
+      border-top: 5px solid var(--blue);
+    }
+
+    .code-card.two {
+      border-top: 5px solid var(--green);
+    }
+
+    .code-card h3 {
+      margin: 12px 0 14px;
+      font-size: 22px;
+    }
+
     code {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
@@ -878,6 +904,7 @@
       .decision-line,
       .base-strip,
       .architecture-compare,
+      .code-compare,
       .lane-grid,
       .owner-grid,
       .index-flow,
@@ -1006,6 +1033,54 @@
             </div>
             <div class="mind-note green">按设计 owner 存放，谁负责谁维护</div>
           </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>目录树示意</h2>
+      <p class="section-note">脑图看关系，目录树看实际落盘方式。两个方案都给一份代码式结构。</p>
+      <div class="code-compare">
+        <article class="code-card one">
+          <span class="tag blue">Proposal 1</span>
+          <h3>新增 2 个独立 Zone</h3>
+          <pre><code>Design 知识
+Design 基础
+  └─ 主 APP 品牌规范
+AI 机制
+组织架构
+横向专项
+
+子 APP Zone
+  ├─ 京东视频
+  ├─ 京东秒杀
+  └─ 京东直播
+
+子品牌 Zone
+  ├─ 频道品牌
+  │  ├─ 京东超市
+  │  └─ 新品
+  ├─ 权益/机制品牌
+  │  └─ PLUS
+  └─ 线下品牌书</code></pre>
+        </article>
+
+        <article class="code-card two">
+          <span class="tag green">Proposal 2</span>
+          <h3>沉到组织架构 Zone</h3>
+          <pre><code>Design 知识
+Design 基础
+  └─ 主 APP 品牌规范
+AI 机制
+组织架构
+  ├─ 品牌与营销设计部
+  │  └─ 子品牌 / 活动品牌 / 线下品牌书
+  ├─ 综合业务设计组
+  │  └─ 京东视频 APP / 京东直播相关
+  ├─ 本地生活服务设计部
+  │  └─ 外卖 APP
+  └─ 其他部门...
+横向专项</code></pre>
         </article>
       </div>
     </section>
