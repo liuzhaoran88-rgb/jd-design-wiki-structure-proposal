@@ -806,6 +806,46 @@
       font-weight: 800;
     }
 
+    .code-demo-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .code-demo {
+      overflow: hidden;
+      border-radius: 8px;
+      background: #eceeef;
+    }
+
+    .code-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px 0;
+      color: #6d737c;
+      font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 15px;
+    }
+
+    .code-actions {
+      display: inline-flex;
+      gap: 12px;
+      color: #838992;
+      font-size: 18px;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", sans-serif;
+    }
+
+    .structure-code {
+      margin: 0;
+      padding: 22px 18px 24px;
+      overflow-x: auto;
+      background: #eceeef;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -1045,6 +1085,62 @@
             <div class="mind-note green">按设计 owner 存放，谁负责谁维护</div>
           </div>
         </article>
+      </div>
+    </section>
+
+    <section id="code-demo">
+      <h2>目录代码示意</h2>
+      <p class="section-note">同样的两套方案，用目录树看会更直观：Proposal 1 是新增两个 Zone；Proposal 2 是把内容沉到组织架构里的部门空间。</p>
+
+      <div class="code-demo-list">
+        <div>
+          <span class="tag blue">Proposal 1：新增独立 Zone</span>
+          <div class="code-demo">
+            <div class="code-meta">
+              <span>text</span>
+              <span class="code-actions">↪ ⧉</span>
+            </div>
+            <pre class="structure-code"><code>Design 知识
+Design 基础
+  └─ 主 APP 品牌规范
+AI 机制
+组织架构
+横向专项
+
+子 APP Zone
+  ├─ 京东视频
+  ├─ 京东秒杀
+  └─ 京东直播
+
+子品牌 Zone
+  ├─ 频道品牌：京东超市 / 新品
+  ├─ 权益/机制品牌：PLUS
+  └─ 线下品牌书 / 活动品牌</code></pre>
+          </div>
+        </div>
+
+        <div>
+          <span class="tag green">Proposal 2：放回组织架构 Zone</span>
+          <div class="code-demo">
+            <div class="code-meta">
+              <span>text</span>
+              <span class="code-actions">↪ ⧉</span>
+            </div>
+            <pre class="structure-code"><code>Design 知识
+Design 基础
+  └─ 主 APP 品牌规范
+AI 机制
+组织架构
+  ├─ 品牌与营销设计部
+  │  └─ 子品牌 / 活动品牌 / 线下品牌书
+  ├─ 综合业务设计组
+  │  └─ 京东视频 APP / 京东直播相关
+  ├─ 本地生活服务设计部
+  │  └─ 外卖 APP
+  └─ 其他部门...
+横向专项</code></pre>
+          </div>
+        </div>
       </div>
     </section>
 
