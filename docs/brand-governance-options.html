@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>基于品牌和多端多 APP 场景的结构优化方案</title>
+  <style>
+    :root {
+      --red: #fa2c19;
+      --ink: #171a1f;
+      --text: #3a414d;
+      --muted: #687181;
+      --line: #e6e8ee;
+      --bg: #f7f8fa;
+      --panel: #ffffff;
+      --soft-red: #fff0ee;
+      --soft-blue: #eef4ff;
+      --blue: #2457c5;
+      --soft-green: #edf8f4;
+      --green: #16845f;
+      --soft-amber: #fff5e3;
+      --amber: #a86406;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--red);
+      border-radius: 8px;
+      padding: 38px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 820px;
+      font-size: 44px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 18px 0 0;
+      max-width: 860px;
+      color: var(--text);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .sublead {
+      margin: 10px 0 0;
+      max-width: 780px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    section {
+      margin-top: 28px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .chapter-title {
+      margin-top: 28px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--red);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .chapter-title.platform {
+      border-left-color: var(--blue);
+    }
+
+    .chapter-title h2 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .chapter-title p {
+      margin: 0;
+      max-width: 860px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .logic {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .layer {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      min-height: 280px;
+    }
+
+    .layer.foundation {
+      border-top: 4px solid var(--red);
+    }
+
+    .layer.scene {
+      border-top: 4px solid var(--blue);
+    }
+
+    .layer.ai {
+      border-top: 4px solid var(--green);
+    }
+
+    .num {
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--red);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .scene .num {
+      background: var(--blue);
+    }
+
+    .ai .num {
+      background: var(--green);
+    }
+
+    h3 {
+      margin: 16px 0 8px;
+      font-size: 21px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .layer p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #f1f3f6;
+      color: #343b48;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .foundation .chip {
+      background: var(--soft-red);
+      color: var(--red);
+    }
+
+    .scene .chip {
+      background: var(--soft-blue);
+      color: var(--blue);
+    }
+
+    .ai .chip {
+      background: var(--soft-green);
+      color: var(--green);
+    }
+
+    .rule-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .rule {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .rule strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .rule span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .diagram {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr 44px 1fr 44px 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      min-height: 122px;
+      background: #fbfcfd;
+    }
+
+    .box h3 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .box.source {
+      background: var(--soft-red);
+      border-color: #ffc7bf;
+    }
+
+    .box.usage {
+      background: var(--soft-blue);
+      border-color: #cfdcff;
+    }
+
+    .box.router {
+      background: var(--soft-green);
+      border-color: #c9eadc;
+    }
+
+    .arrow {
+      color: #98a1ae;
+      font-size: 24px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 16px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      background: #171a1f;
+      color: #f4f6f8;
+      font-size: 13px;
+      line-height: 1.62;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .cases {
+      display: grid;
+      gap: 10px;
+    }
+
+    .case {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfcfd;
+    }
+
+    .case strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .case span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .summary {
+      background: var(--panel);
+      border: 1px solid #ffc7bf;
+      border-left: 6px solid var(--red);
+      border-radius: 8px;
+      padding: 22px 24px;
+    }
+
+    .summary h2 {
+      color: var(--red);
+    }
+
+    .summary .section-title {
+      color: var(--red);
+    }
+
+    .summary p {
+      margin: 0;
+      max-width: 880px;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 920px) {
+      .logic,
+      .rule-grid,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 28px 16px 44px;
+      }
+
+      .hero {
+        padding: 26px 22px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .lead {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">STRUCTURE OPTIMIZATION</p>
+      <h1>基于品牌和多端多 APP 场景的结构优化方案</h1>
+      <p class="lead">用“共享权威源 + 场景投影 + Profile 继承”的方式，让设计知识既能统一管理，也能被 AI 按场景精准调用。</p>
+      <p class="sublead">上半部分解决品牌规范怎么管；下半部分解决主 APP、子 APP、小程序、PC 端如何共享基础知识，并保留各自差异。</p>
+    </header>
+
+    <section class="chapter-title">
+      <h2>品牌方案：品牌中台 + 场景投影</h2>
+      <p>品牌定义集中维护，APP 页面、大促、子品牌只写应用规则、覆盖规则和例外规则，避免同一套品牌规范在多处重复和漂移。</p>
+    </section>
+
+    <section>
+      <h3 class="section-title">核心逻辑</h3>
+      <div class="logic">
+        <article class="layer foundation">
+          <span class="num">1</span>
+          <h3>品牌中台是唯一权威源</h3>
+          <p>集团品牌、C 端品牌、子品牌继承、APP 品牌资产，都先回到一个中心目录管理。</p>
+          <div class="chips">
+            <span class="chip">brand taxonomy</span>
+            <span class="chip">brand tokens</span>
+            <span class="chip">logo / color</span>
+            <span class="chip">voice / image</span>
+          </div>
+        </article>
+
+        <article class="layer scene">
+          <span class="num">2</span>
+          <h3>场景投影只写应用规则</h3>
+          <p>APP 页面、大促活动、业务线页面不重新定义品牌，只描述本场景如何使用、覆盖或限制。</p>
+          <div class="chips">
+            <span class="chip">page brand-usage</span>
+            <span class="chip">campaign overlay</span>
+            <span class="chip">app version</span>
+            <span class="chip">exceptions</span>
+          </div>
+        </article>
+
+        <article class="layer ai">
+          <span class="num">3</span>
+          <h3>AI 通过索引自动组装</h3>
+          <p>AI 根据平台、人群、页面、子品牌、活动、APP 版本，选择需要加载的品牌规则包。</p>
+          <div class="chips">
+            <span class="chip">brand-index.yaml</span>
+            <span class="chip">ai-schema.yaml</span>
+            <span class="chip">rule selector</span>
+            <span class="chip">review checklist</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="section-title">一句话流程</h3>
+      <div class="diagram">
+        <div class="flow">
+          <div class="box source">
+            <h3>定义层</h3>
+            <p><code>foundations/brand</code><br />沉淀品牌是什么，哪些规则不能变。</p>
+          </div>
+          <div class="arrow">→</div>
+          <div class="box usage">
+            <h3>应用层</h3>
+            <p><code>product-architecture</code> / <code>horizontal</code><br />说明当前页面、活动、版本怎么用。</p>
+          </div>
+          <div class="arrow">→</div>
+          <div class="box router">
+            <h3>消费层</h3>
+            <p><code>brand-index.yaml</code><br />让 AI 在生图、生 UI、设计检查时选对规则。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="section-title">落到目录里长什么样</h3>
+      <div class="two-col">
+        <div class="panel">
+          <pre><code>jd-design-system-md-v16/
+├── foundations/
+│   └── brand/
+│       ├── README.md
+│       ├── brand-taxonomy.md
+│       ├── group/
+│       ├── consumer/
+│       ├── app/
+│       ├── app/
+│       ├── sub-brands/
+│       ├── brand-index.yaml
+│       └── ai-schema.yaml
+│
+├── product-architecture/
+│   └── app/pages/home/
+│       └── brand-usage.md
+│
+└── horizontal/
+    └── campaigns/618/
+        └── brand-overlay.md</code></pre>
+        </div>
+
+        <div class="panel">
+          <h3>维护边界</h3>
+          <div class="cases">
+            <div class="case">
+              <strong>品牌定义改动</strong>
+              <span>回到 <code>foundations/brand</code>，例如京东红、Logo、Joy、品牌语气、子品牌继承关系。</span>
+            </div>
+            <div class="case">
+              <strong>页面使用差异</strong>
+              <span>写在页面自己的 <code>brand-usage.md</code>，例如首页可以强品牌，结算页要克制。</span>
+            </div>
+            <div class="case">
+              <strong>大促临时覆盖</strong>
+              <span>写在 <code>brand-overlay.md</code>，例如 618 允许更高氛围，但不能覆盖主流程效率。</span>
+            </div>
+            <div class="case">
+              <strong>APP 大改版</strong>
+              <span>APP 品牌规则版本化，避免 v16、v17 的 UI 品牌策略互相污染。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="section-title">AI 怎么调用</h3>
+      <div class="two-col">
+        <div class="panel">
+          <pre><code>brand_rule_selector:
+  inputs:
+    - audience
+    - platform
+    - page_type
+    - sub_brand
+    - campaign
+    - app_version
+
+  outputs:
+    - brand_docs
+    - token_set
+    - visual_constraints
+    - generation_rules
+    - review_checklist</code></pre>
+        </div>
+
+        <div class="panel">
+          <h3>典型场景</h3>
+          <div class="cases">
+            <div class="case">
+              <strong>生成京东 APP 618 首页</strong>
+              <span>集团品牌 + C 端品牌 + APP v16 + 首页 brand-usage + 618 brand-overlay。</span>
+            </div>
+            <div class="case">
+              <strong>生成日常频道页</strong>
+              <span>集团品牌 + C 端品牌 + APP 当前版本 + 频道页 brand-usage，保持京东识别但不过度营销化。</span>
+            </div>
+            <div class="case">
+              <strong>APP 大改版页面适配</strong>
+              <span>集团品牌 + C 端品牌 + APP v17 改版规则 + 页面 brand-usage，检查旧页面是否符合新视觉语言。</span>
+            </div>
+            <div class="case">
+              <strong>检查购物车 / 结算页</strong>
+              <span>集团品牌 + C 端品牌 + APP 当前版本 + 主流程页面规则，重点检查红色使用、Joy 出现边界和转化效率。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter-title platform">
+      <h2>多端多 APP 方案：共享核心 + 端 / APP Profile</h2>
+      <p>主 APP、子 APP、小程序、PC 端共同继承设计哲学、品牌核心和基础规范；各端通过 Profile 声明自己的平台约束、版本策略、页面规则和例外。</p>
+    </section>
+
+    <section>
+      <h3 class="section-title">怎么接入现有框架</h3>
+      <div class="two-col">
+        <div class="panel">
+          <h3>核心原则</h3>
+          <div class="cases">
+            <div class="case">
+              <strong>共享内容不复制</strong>
+              <span>设计哲学、品牌核心、基础 token、通用组件原则，放在共享层统一维护。</span>
+            </div>
+            <div class="case">
+              <strong>每个端 / APP 建 Profile</strong>
+              <span>主 APP、子 APP、小程序、PC 端只声明继承了什么、覆盖了什么、有哪些例外。</span>
+            </div>
+            <div class="case">
+              <strong>页面规则继续场景化</strong>
+              <span>首页、搜索、PDP、购物车、频道页、大促页，仍然写自己的 page-usage / brand-usage。</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <pre><code>jd-design-system-md-v16/
+├── knowledge/philosophy/        # 全端共享
+├── foundations/brand/           # 品牌核心共享
+├── foundations/tokens/          # 基础 token 共享
+├── horizontal/multi-platform/   # 端差异规则
+│
+└── product-architecture/apps/
+    ├── jd-main-app/             # 主 APP Profile
+    ├── jd-sub-app/              # 子 APP Profile
+    ├── jd-mini-program/         # 小程序 Profile
+    └── jd-pc/                   # PC Profile</code></pre>
+        </div>
+      </div>
+
+      <div class="diagram" style="margin-top:16px;">
+        <div class="flow">
+          <div class="box source">
+            <h3>共享核心</h3>
+            <p>设计哲学、C 端品牌、基础 token、通用原则。</p>
+          </div>
+          <div class="arrow">→</div>
+          <div class="box usage">
+            <h3>端 / APP Profile</h3>
+            <p>主 APP、子 APP、小程序、PC 端的继承、覆盖、例外和版本。</p>
+          </div>
+          <div class="arrow">→</div>
+          <div class="box router">
+            <h3>页面场景</h3>
+            <p>首页、频道页、PDP、购物车、大促页的具体应用规则。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px;">
+        <div class="panel">
+          <pre><code>app_profile:
+  id: jd-main-app
+  inherits:
+    - knowledge/philosophy
+    - foundations/brand/consumer
+    - foundations/tokens
+  platform:
+    - ios
+    - android
+  overrides:
+    - app_brand_version: v17
+    - navigation_pattern: bottom_tab
+    - page_density: high
+  owns:
+    - page_rules
+    - app_specific_components
+    - version_changelog</code></pre>
+        </div>
+
+        <div class="panel">
+          <h3>AI 调用顺序</h3>
+          <div class="cases">
+            <div class="case">
+              <strong>主 APP 大改版首页</strong>
+              <span>共享设计哲学 + C 端品牌核心 + Mobile APP 平台规则 + 主 APP v17 Profile + 首页规则。</span>
+            </div>
+            <div class="case">
+              <strong>小程序频道页</strong>
+              <span>共享设计哲学 + C 端品牌核心 + 小程序平台约束 + 小程序 Profile + 频道页规则。</span>
+            </div>
+            <div class="case">
+              <strong>PC 首页运营区</strong>
+              <span>共享设计哲学 + C 端品牌核心 + PC Web 平台规则 + PC Profile + 首页运营区规则。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary">
+      <h3 class="section-title">最终判断</h3>
+      <p>这套结构的核心价值：品牌有统一权威源，多端多 APP 有清晰继承关系，页面和活动场景也能被 AI 精准调用。</p>
+    </section>
+  </main>
+</body>
+</html>
