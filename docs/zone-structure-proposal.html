@@ -840,6 +840,44 @@
       font-weight: 800;
     }
 
+    td.better-blue,
+    td.better-green {
+      position: relative;
+      border-left: 4px solid transparent;
+    }
+
+    td.better-blue {
+      background: var(--soft-blue);
+      border-left-color: var(--blue);
+    }
+
+    td.better-green {
+      background: var(--soft-green);
+      border-left-color: var(--green);
+    }
+
+    .better-label {
+      display: inline-flex;
+      align-items: center;
+      margin: 0 8px 4px 0;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
+    .better-label.blue {
+      background: #dce8ff;
+      color: var(--blue);
+    }
+
+    .better-label.green {
+      background: #d9f1e8;
+      color: var(--green);
+    }
+
     pre {
       margin: 0;
       padding: 18px;
@@ -1128,16 +1166,16 @@
             <tr>
               <td>设计师维护</td>
               <td>同类知识集中，结构清楚；但设计师可能要离开自己的部门空间去维护。</td>
-              <td>最贴近真实 owner，谁负责谁维护；但同类对象会散落在不同部门空间。</td>
+              <td class="better-green"><span class="better-label green">更好</span>最贴近真实 owner，谁负责谁维护；但同类对象会散落在不同部门空间。</td>
             </tr>
             <tr>
               <td>AI 调用</td>
-              <td>AI 直接按对象类型找规则，路径短，召回更自然。</td>
+              <td class="better-blue"><span class="better-label blue">更好</span>AI 直接按对象类型找规则，路径短，召回更自然。</td>
               <td>AI 会多一层组织结构，需要依赖全局索引和 frontmatter 才好调用。</td>
             </tr>
             <tr>
               <td>治理成本</td>
-              <td>需要维护新增 Zone 的 owner 和边界，避免和组织架构重复。</td>
+              <td class="better-blue"><span class="better-label blue">更轻</span>需要维护新增 Zone 的 owner 和边界，避免和组织架构重复。</td>
               <td>需要维护全局索引、标签体系和内容元信息，避免 AI 漏召回。</td>
             </tr>
             <tr>
