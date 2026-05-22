@@ -1,54 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>子 APP 与子品牌知识结构方案对比</title>
   <style>
     :root {
-      --red: #f02b20;
+      --red: #fa2c19;
       --ink: #171a1f;
-      --text: #3d4554;
-      --muted: #6f7888;
-      --line: #dfe3ea;
+      --text: #3b4250;
+      --muted: #697386;
+      --line: #e6e8ee;
       --bg: #f7f8fa;
       --panel: #ffffff;
-      --code: #eceef1;
       --blue: #2457c5;
-      --green: #2f8762;
+      --green: #16845f;
+      --amber: #a86406;
+      --soft-red: #fff0ee;
+      --soft-blue: #eef4ff;
+      --soft-green: #edf8f4;
+      --soft-amber: #fff5e3;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       background: var(--bg);
       color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
-      letter-spacing: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.55;
     }
 
     .page {
-      max-width: 1120px;
+      max-width: 1160px;
       margin: 0 auto;
-      padding: 48px 24px 72px;
+      padding: 48px 24px 64px;
     }
 
     .hero {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-top: 8px solid var(--red);
+      border-top: 5px solid var(--red);
       border-radius: 8px;
-      padding: 48px 56px;
+      padding: 38px;
     }
 
     .eyebrow {
       margin: 0 0 12px;
       color: var(--red);
       font-size: 13px;
-      font-weight: 900;
+      font-weight: 800;
       letter-spacing: 0;
     }
 
@@ -61,161 +64,854 @@
     }
 
     .lead {
-      margin: 20px 0 0;
+      margin: 18px 0 0;
       max-width: 920px;
       color: var(--text);
       font-size: 20px;
-      line-height: 1.65;
-      font-weight: 800;
+      font-weight: 700;
     }
 
     .sublead {
-      margin: 12px 0 0;
-      max-width: 880px;
+      margin: 10px 0 0;
+      max-width: 920px;
       color: var(--muted);
       font-size: 16px;
-      line-height: 1.7;
     }
 
-    section {
-      margin-top: 40px;
-    }
+    section { margin-top: 28px; }
 
     h2 {
-      margin: 0 0 8px;
-      font-size: 30px;
+      margin: 0 0 14px;
+      font-size: 28px;
       line-height: 1.2;
       letter-spacing: 0;
     }
 
+    h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
     .section-note {
-      margin: 0 0 18px;
+      margin: -6px 0 16px;
       max-width: 900px;
       color: var(--muted);
       font-size: 15px;
-      line-height: 1.7;
     }
 
-    .tree-block {
-      margin: 18px 0 0;
+    .three-col,
+    .two-col {
+      display: grid;
+      gap: 16px;
     }
 
-    .tree-title {
-      display: flex;
-      gap: 10px;
+    .three-col { grid-template-columns: 1fr 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr 1fr; }
+
+    .panel,
+    .proposal,
+    .summary {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .proposal.one { border-top: 4px solid var(--blue); }
+    .proposal.two { border-top: 4px solid var(--green); }
+    .panel.base { border-top: 4px solid var(--red); }
+
+    .base-strip {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--red);
+      border-radius: 8px;
+      padding: 20px 22px;
+      display: grid;
+      grid-template-columns: minmax(180px, .28fr) minmax(0, 1fr);
+      gap: 18px;
       align-items: center;
-      margin: 0 0 10px;
-      color: var(--ink);
+    }
+
+    .base-strip h3 {
+      margin: 0 0 6px;
       font-size: 20px;
+    }
+
+    .base-strip p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .split-label {
+      margin: 18px 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .compare-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      min-height: 360px;
+    }
+
+    .compare-card.one {
+      border-top: 6px solid var(--blue);
+    }
+
+    .compare-card.two {
+      border-top: 6px solid var(--green);
+    }
+
+    .compare-card h3 {
+      margin: 16px 0 8px;
+      font-size: 30px;
+      line-height: 1.16;
+    }
+
+    .compare-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .route {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .route-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 13px 14px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .route-item.hot {
+      background: var(--soft-blue);
+      border-color: #cfdcff;
+      color: var(--blue);
+    }
+
+    .compare-card.two .route-item.hot {
+      background: var(--soft-green);
+      border-color: #c9eadc;
+      color: var(--green);
+    }
+
+    .decision-line {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 12px;
+    }
+
+    .decision-line .note {
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .decision-line .note.blue {
+      background: var(--soft-blue);
+      color: var(--blue);
+    }
+
+    .decision-line .note.green {
+      background: var(--soft-green);
+      color: var(--green);
+    }
+
+    .architecture-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .scheme-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .scheme-card.one {
+      border-top: 6px solid var(--blue);
+    }
+
+    .scheme-card.two {
+      border-top: 6px solid var(--green);
+    }
+
+    .scheme-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .scheme-head h3 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.18;
+    }
+
+    .scheme-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 76px;
+      min-height: 44px;
+      border-radius: 8px;
+      font-size: 18px;
       font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .scheme-card.one .count-badge {
+      background: var(--soft-blue);
+      color: var(--blue);
+    }
+
+    .scheme-card.two .count-badge {
+      background: var(--soft-green);
+      color: var(--green);
+    }
+
+    .tree {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fbfcfd;
+    }
+
+    .tree-root {
+      margin-bottom: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #171a1f;
+      color: #fff;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .tree-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .tree-group {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px;
+      background: #fff;
+    }
+
+    .tree-group.hot-blue {
+      border-color: #cfdcff;
+      background: var(--soft-blue);
+    }
+
+    .tree-group.hot-green {
+      border-color: #c9eadc;
+      background: var(--soft-green);
+    }
+
+    .tree-group-title {
+      margin-bottom: 10px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .tree-items {
+      display: grid;
+      gap: 8px;
+    }
+
+    .tree-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px 11px;
+      background: #fff;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .tree-item.em-blue {
+      border-color: #b9ccff;
+      color: var(--blue);
+    }
+
+    .tree-item.em-green {
+      border-color: #b8e4d1;
+      color: var(--green);
+    }
+
+    .tree-note {
+      margin-top: 14px;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .tree-note.blue {
+      background: var(--soft-blue);
+      color: var(--blue);
+    }
+
+    .tree-note.green {
+      background: var(--soft-green);
+      color: var(--green);
+    }
+
+    .mindmap {
+      --line-color: #cdd3df;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .mind-root {
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto 34px;
+      padding: 13px 18px;
+      border-radius: 999px;
+      background: #171a1f;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 900;
+      text-align: center;
+      position: relative;
+    }
+
+    .mind-root::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 2px;
+      height: 18px;
+      background: var(--line-color);
+      transform: translateX(-50%);
+    }
+
+    .mind-branches {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      position: relative;
+    }
+
+    .mind-branches::before {
+      content: "";
+      position: absolute;
+      top: -17px;
+      left: 9%;
+      right: 9%;
+      height: 2px;
+      background: var(--line-color);
+    }
+
+    .mind-branch {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+      padding-top: 18px;
+    }
+
+    .mind-branch::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -17px;
+      width: 2px;
+      height: 32px;
+      background: var(--line-color);
+      transform: translateX(-50%);
+    }
+
+    .mind-node {
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto 14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 2px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .mind-node.blue {
+      border-color: #b9ccff;
+      background: var(--soft-blue);
+      color: var(--blue);
+    }
+
+    .mind-node.green {
+      border-color: #b8e4d1;
+      background: var(--soft-green);
+      color: var(--green);
+    }
+
+    .mind-node.amber {
+      border-color: #f3d9a4;
+      background: var(--soft-amber);
+      color: var(--amber);
+    }
+
+    .mind-leaves {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mind-leaves li {
+      position: relative;
+      padding: 8px 10px 8px 18px;
+      border-left: 2px solid var(--line-color);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .mind-leaves li::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 50%;
+      width: 12px;
+      height: 2px;
+      background: var(--line-color);
+    }
+
+    .mind-note {
+      width: fit-content;
+      max-width: 100%;
+      margin: 18px auto 0;
+      padding: 11px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .mind-note.blue {
+      background: var(--soft-blue);
+      color: var(--blue);
+    }
+
+    .mind-note.green {
+      background: var(--soft-green);
+      color: var(--green);
+    }
+
+    .logic-diagram {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .logic-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .logic-title-row h3 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .logic-title-row p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .lane-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .lane {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 14px;
+      min-height: 210px;
+    }
+
+    .lane.blue {
+      background: var(--soft-blue);
+      border-color: #cfdcff;
+    }
+
+    .lane.green {
+      background: var(--soft-green);
+      border-color: #c9eadc;
+    }
+
+    .lane.amber {
+      background: var(--soft-amber);
+      border-color: #f3d9a4;
+    }
+
+    .lane-title {
+      margin-bottom: 11px;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .node-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .node {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 11px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .node small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .owner-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .owner-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 16px;
+      min-height: 190px;
+    }
+
+    .owner-card strong {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .owner-card .node {
+      border-color: #c9eadc;
+    }
+
+    .index-flow {
+      display: grid;
+      grid-template-columns: 1fr 44px 1fr 44px 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .index-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fbfcfd;
+      min-height: 150px;
+    }
+
+    .index-box.question {
+      background: var(--soft-blue);
+      border-color: #cfdcff;
+    }
+
+    .index-box.lookup {
+      background: var(--soft-amber);
+      border-color: #f3d9a4;
+    }
+
+    .index-box.target {
+      background: var(--soft-green);
+      border-color: #c9eadc;
+    }
+
+    .index-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .index-box span {
+      color: var(--muted);
+      font-size: 13px;
     }
 
     .tag {
       display: inline-flex;
       align-items: center;
-      height: 30px;
-      padding: 0 12px;
+      min-height: 28px;
+      padding: 4px 10px;
       border-radius: 999px;
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .tag.blue {
-      background: #eaf0ff;
-      color: var(--blue);
-    }
-
-    .tag.green {
-      background: #e9f6ef;
-      color: var(--green);
-    }
-
-    .tree-code {
-      margin: 0;
-      overflow-x: auto;
-      background: var(--code);
-      border-radius: 8px;
-      padding: 24px 26px;
-      color: var(--ink);
-      font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-      font-size: 18px;
-      line-height: 1.75;
-      white-space: pre;
-    }
-
-    .tree-code strong {
-      font-weight: 900;
-    }
-
-    .split-line {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 28px;
-    }
-
-    .logic-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      align-items: start;
-      margin-top: 18px;
-    }
-
-    .logic-row .tree-block {
-      margin: 0;
-    }
-
-    .decision {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-left: 6px solid var(--red);
-      border-radius: 8px;
-      padding: 26px 28px;
-    }
-
-    .decision h2 {
-      margin-bottom: 10px;
-    }
-
-    .decision p {
-      margin: 0;
-      color: var(--text);
-      font-size: 18px;
-      line-height: 1.75;
+      background: #f1f3f6;
+      color: #343b48;
+      font-size: 12px;
       font-weight: 800;
     }
 
-    @media (max-width: 860px) {
-      .logic-row {
+    .tag.red { background: var(--soft-red); color: var(--red); }
+    .tag.blue { background: var(--soft-blue); color: var(--blue); }
+    .tag.green { background: var(--soft-green); color: var(--green); }
+    .tag.amber { background: var(--soft-amber); color: var(--amber); }
+
+    .proposal h3,
+    .panel h3 {
+      margin-top: 14px;
+    }
+
+    .proposal p,
+    .panel p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #fbfcfd;
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .list {
+      display: grid;
+      gap: 9px;
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list li {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px 12px;
+      background: #fbfcfd;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .map {
+      display: grid;
+      grid-template-columns: 1fr 44px 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .map-block {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: #fbfcfd;
+      min-height: 145px;
+    }
+
+    .map-block.org {
+      background: var(--soft-green);
+      border-color: #c9eadc;
+    }
+
+    .map-block.index {
+      background: var(--soft-amber);
+      border-color: #f3d9a4;
+    }
+
+    .map-block strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 17px;
+    }
+
+    .map-block span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #98a1ae;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #fbfcfd;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    td:first-child {
+      width: 150px;
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      background: #171a1f;
+      color: #f4f6f8;
+      font-size: 13px;
+      line-height: 1.62;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .summary {
+      border: 1px solid #ffc7bf;
+      border-left: 6px solid var(--red);
+    }
+
+    .summary h2 { color: var(--red); }
+
+    .summary p {
+      margin: 0;
+      max-width: 940px;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 980px) {
+      .three-col,
+      .two-col,
+      .map,
+      .compare-grid,
+      .decision-line,
+      .base-strip,
+      .architecture-compare,
+      .lane-grid,
+      .owner-grid,
+      .index-flow,
+      .mind-branches {
         grid-template-columns: 1fr;
+      }
+
+      .mind-branches {
+        display: grid;
+      }
+
+      .mind-branches::before,
+      .mind-root::after,
+      .mind-branch::before {
+        display: none;
+      }
+
+      .mind-branch {
+        padding-top: 0;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+        min-height: 24px;
       }
     }
 
     @media (max-width: 640px) {
-      .page {
-        padding: 28px 16px 48px;
-      }
-
-      .hero {
-        padding: 30px 24px;
-      }
-
-      h1 {
-        font-size: 32px;
-      }
-
-      h2 {
-        font-size: 26px;
-      }
-
-      .lead {
-        font-size: 18px;
-      }
-
-      .tree-code {
-        font-size: 15px;
-        padding: 20px;
-      }
+      .page { padding: 28px 16px 44px; }
+      .hero { padding: 26px 22px; }
+      h1 { font-size: 32px; }
+      .lead { font-size: 18px; }
+      table { min-width: 760px; }
+      .table-wrap { overflow-x: auto; }
     }
   </style>
 </head>
@@ -225,121 +921,254 @@
       <p class="eyebrow">PROPOSAL COMPARISON</p>
       <h1>子 APP 与子品牌知识结构：两种方案对比</h1>
       <p class="lead">Proposal 1 是按对象类型新增 Zone；Proposal 2 是放回组织架构 Zone，由设计部门空间负责维护。</p>
-      <p class="sublead">重点看两件事：结构是否清楚，AI 是否容易找到正确规则。</p>
+      <p class="sublead">这里重点比较两个问题：设计师长期维护是否顺手，AI 生成 / 检查时是否容易找到正确规则。</p>
     </header>
 
     <section>
-      <h2>两种方案的大结构</h2>
-      <p class="section-note">都保留原来的 5 大 Zone，区别只在于：子 APP 和子品牌是“单独成区”，还是“进入对应部门空间”。</p>
+      <h2>两种大结构</h2>
+      <p class="section-note">先看完整框架。两套方案都继承原来的 5 大 Zone，真正差异是：子 APP 和子品牌是“新增成独立 Zone”，还是“放进组织架构的部门空间”。</p>
 
-      <div class="split-line">
-        <div class="tree-block">
-          <div class="tree-title"><span class="tag blue">Proposal 1</span>新增 2 个独立 Zone</div>
-          <pre class="tree-code"><code>JD Design Wiki
-├─ Design 知识
-├─ Design 基础
-│  └─ 主 APP 品牌规范
-├─ AI 机制
-├─ 组织架构
-├─ 横向专项
-│
-├─ 子 APP Zone
-│  ├─ 京东视频
-│  ├─ 京东秒杀
-│  └─ 京东直播
-│
-└─ 子品牌 Zone
-   ├─ 频道品牌：京东超市 / 新品
-   ├─ 权益/机制品牌：PLUS
-   └─ 线下品牌书</code></pre>
-        </div>
+      <div class="architecture-compare">
+        <article class="scheme-card one">
+          <div class="scheme-head">
+            <div>
+              <span class="tag blue">Proposal 1</span>
+              <h3>7 Zone 结构</h3>
+              <p>原 5 大 Zone 不变，额外新增 2 个独立 Zone。</p>
+            </div>
+            <span class="count-badge">5 + 2</span>
+          </div>
 
-        <div class="tree-block">
-          <div class="tree-title"><span class="tag green">Proposal 2</span>放回组织架构 Zone</div>
-          <pre class="tree-code"><code>JD Design Wiki
-├─ Design 知识
-├─ Design 基础
-│  └─ 主 APP 品牌规范
-├─ AI 机制
-├─ 横向专项
-│
-└─ 组织架构
-   ├─ 品牌与营销设计部
-   │  └─ 子品牌 / 活动品牌 / 线下品牌书
-   │
-   ├─ 综合业务设计组
-   │  └─ 京东视频 APP / 京东直播相关
-   │
-   ├─ 本地生活服务设计部
-   │  └─ 外卖 APP
-   │
-   └─ 其他部门...</code></pre>
+          <div class="mindmap">
+            <div class="mind-root">JD Design Wiki</div>
+            <div class="mind-branches">
+              <div class="mind-branch">
+                <div class="mind-node">原有 5 大 Zone</div>
+                <ul class="mind-leaves">
+                  <li>Design 知识</li>
+                  <li>Design 基础：主 APP 品牌规范</li>
+                  <li>AI 机制</li>
+                  <li>组织架构</li>
+                  <li>横向专项</li>
+                </ul>
+              </div>
+              <div class="mind-branch">
+                <div class="mind-node blue">新增子 APP Zone</div>
+                <ul class="mind-leaves">
+                  <li>京东视频</li>
+                  <li>京东秒杀</li>
+                  <li>京东直播</li>
+                </ul>
+              </div>
+              <div class="mind-branch">
+                <div class="mind-node blue">新增子品牌 Zone</div>
+                <ul class="mind-leaves">
+                  <li>PLUS</li>
+                  <li>京东超市 / 新品</li>
+                  <li>线下品牌书</li>
+                </ul>
+              </div>
+            </div>
+            <div class="mind-note blue">按对象类型拆出来，同类知识集中管理</div>
+          </div>
+        </article>
+
+        <article class="scheme-card two">
+          <div class="scheme-head">
+            <div>
+              <span class="tag green">Proposal 2</span>
+              <h3>5 Zone 结构</h3>
+              <p>不新增 Zone，子 APP 和子品牌放进组织架构里的部门空间。</p>
+            </div>
+            <span class="count-badge">5</span>
+          </div>
+
+          <div class="mindmap">
+            <div class="mind-root">JD Design Wiki</div>
+            <div class="mind-branches">
+              <div class="mind-branch">
+                <div class="mind-node">其他 4 个 Zone</div>
+                <ul class="mind-leaves">
+                  <li>Design 知识</li>
+                  <li>Design 基础：主 APP 品牌规范</li>
+                  <li>AI 机制</li>
+                  <li>横向专项</li>
+                </ul>
+              </div>
+              <div class="mind-branch">
+                <div class="mind-node green">组织架构 Zone</div>
+                <ul class="mind-leaves">
+                  <li>品牌与营销设计部：子品牌</li>
+                  <li>综合业务设计组：京东视频 APP</li>
+                  <li>本地生活服务设计部：外卖 APP</li>
+                </ul>
+              </div>
+            </div>
+            <div class="mind-note green">按设计 owner 存放，谁负责谁维护</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Proposal 1：按对象类型建 Zone</h2>
+      <p class="section-note">结构逻辑：先判断对象类型，再进对应 Zone。同类内容集中放。</p>
+      <div class="mindmap">
+        <div class="mind-root">按对象类型进入目录</div>
+        <div class="mind-branches">
+          <div class="mind-branch">
+            <div class="mind-node">主 APP 基础</div>
+            <ul class="mind-leaves">
+              <li>Design 基础 Zone</li>
+              <li>京东红 / Joy / CTA</li>
+              <li>基础 token / 组件</li>
+            </ul>
+          </div>
+          <div class="mind-branch">
+            <div class="mind-node blue">子 APP</div>
+            <ul class="mind-leaves">
+              <li>子 APP Zone</li>
+              <li>京东视频 / 京东秒杀 / 京东直播</li>
+              <li>App Profile / 页面规则</li>
+            </ul>
+          </div>
+          <div class="mind-branch">
+            <div class="mind-node amber">子品牌</div>
+            <ul class="mind-leaves">
+              <li>子品牌 Zone</li>
+              <li>PLUS / 京东超市 / 新品</li>
+              <li>线下品牌书 / 活动品牌</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>AI 怎么调用</h2>
-      <p class="section-note">Proposal 1 可以直接按对象类型找；Proposal 2 需要先查全局索引，再跳到部门空间。</p>
-
-      <div class="logic-row">
-        <div class="tree-block">
-          <div class="tree-title"><span class="tag blue">Proposal 1</span>路径更短</div>
-          <pre class="tree-code"><code>AI 需求：生成京东视频 APP 页面
-└─ 子 APP Zone
-   └─ 京东视频
-      └─ 页面规范 / 品牌规则 / 组件规则</code></pre>
-        </div>
-
-        <div class="tree-block">
-          <div class="tree-title"><span class="tag green">Proposal 2</span>先走索引</div>
-          <pre class="tree-code"><code>AI 需求：生成京东视频 APP 页面
-└─ 全局索引
-   ├─ 识别对象：子 APP / 京东视频
-   ├─ 找到 owner：综合业务设计组
-   └─ 跳转路径
-      └─ 组织架构 / 综合业务设计组 / 京东视频 APP</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>设计师怎么维护</h2>
-      <p class="section-note">这里看的是日常责任归属：谁新增、谁更新、谁负责解释规则。</p>
-
-      <div class="logic-row">
-        <div class="tree-block">
-          <div class="tree-title"><span class="tag blue">Proposal 1</span>按知识类型维护</div>
-          <pre class="tree-code"><code>子 APP / 子品牌有统一目录
-├─ 好处：同类规则集中，比较容易横向对齐
-└─ 风险：目录 owner 可能和真实团队不一致</code></pre>
-        </div>
-
-        <div class="tree-block">
-          <div class="tree-title"><span class="tag green">Proposal 2</span>按真实 owner 维护</div>
-          <pre class="tree-code"><code>内容放在负责它的部门空间
-├─ 好处：谁负责谁维护，最贴近真实协作
-└─ 风险：AI 找规则时多一层路径</code></pre>
+      <h2>Proposal 2：按组织 owner 存放</h2>
+      <p class="section-note">结构逻辑：内容不按类型另起 Zone，而是进入负责它的设计部门空间。目录表达 owner。</p>
+      <div class="mindmap">
+        <div class="mind-root">组织架构 Zone</div>
+        <div class="mind-branches">
+          <div class="mind-branch">
+            <div class="mind-node green">品牌与营销设计部</div>
+            <ul class="mind-leaves">
+              <li>子品牌</li>
+              <li>品牌书 / 活动品牌</li>
+              <li>线下品牌资产</li>
+            </ul>
+          </div>
+          <div class="mind-branch">
+            <div class="mind-node green">综合业务设计组</div>
+            <ul class="mind-leaves">
+              <li>京东视频 APP</li>
+              <li>相关内容产品模块</li>
+              <li>视频流 / 直播间页面</li>
+            </ul>
+          </div>
+          <div class="mind-branch">
+            <div class="mind-node green">本地生活服务设计部</div>
+            <ul class="mind-leaves">
+              <li>外卖 APP</li>
+              <li>到家服务</li>
+              <li>本地生活场景</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>优劣势结论</h2>
-      <pre class="tree-code"><code>Proposal 1：新增独立 Zone
-├─ 优势：AI 路径短；子 APP / 子品牌规则集中
-├─ 劣势：新增 Zone 会增加治理边界；维护责任可能不够贴近真实组织
-└─ 适合：AI 调用优先、知识分类优先
-
-Proposal 2：放回组织架构 Zone
-├─ 优势：维护责任清楚；最贴近设计团队真实分工
-├─ 劣势：AI 必须依赖全局索引，否则会在部门目录里迷路
-└─ 适合：长期维护优先、owner 责任优先</code></pre>
+      <h2>Proposal 2 的关键：全局索引</h2>
+      <p class="section-note">Proposal 2 多了一层组织结构，所以必须让 AI 先查一张“总目录表”。</p>
+      <div class="mindmap">
+        <div class="mind-root">全局索引</div>
+        <div class="mind-branches">
+          <div class="mind-branch">
+            <div class="mind-node blue">AI 要找规则</div>
+            <ul class="mind-leaves">
+              <li>生成京东视频 APP 页面</li>
+              <li>检查 PLUS 规则</li>
+              <li>查找外卖 APP 页面规范</li>
+            </ul>
+          </div>
+          <div class="mind-branch">
+            <div class="mind-node amber">索引判断</div>
+            <ul class="mind-leaves">
+              <li>对象类型是什么</li>
+              <li>谁是 owner</li>
+              <li>真实路径在哪里</li>
+            </ul>
+          </div>
+          <div class="mind-branch">
+            <div class="mind-node green">跳到部门空间</div>
+            <ul class="mind-leaves">
+              <li>京东视频 → 综合业务设计组</li>
+              <li>PLUS → 品牌与营销设计部</li>
+              <li>外卖 APP → 本地生活服务设计部</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mind-note green">目录给人维护，索引给 AI 找路</div>
+      </div>
     </section>
 
-    <section class="decision">
+    <section>
+      <h2>两个方案的优劣势</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>Proposal 1：新增独立 Zone</th>
+              <th>Proposal 2：放回组织架构 Zone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>设计师维护</td>
+              <td>同类知识集中，结构清楚；但设计师可能要离开自己的部门空间去维护。</td>
+              <td>最贴近真实 owner，谁负责谁维护；但同类对象会散落在不同部门空间。</td>
+            </tr>
+            <tr>
+              <td>AI 调用</td>
+              <td>AI 直接按对象类型找规则，路径短，召回更自然。</td>
+              <td>AI 会多一层组织结构，需要依赖全局索引和 frontmatter 才好调用。</td>
+            </tr>
+            <tr>
+              <td>治理成本</td>
+              <td>需要维护新增 Zone 的 owner 和边界，避免和组织架构重复。</td>
+              <td>需要维护全局索引、标签体系和内容元信息，避免 AI 漏召回。</td>
+            </tr>
+            <tr>
+              <td>适合场景</td>
+              <td>更适合 AI-first 的知识结构，或者希望统一管理所有子 APP / 子品牌规则。</td>
+              <td>更适合组织协作优先的 wiki，尤其当各部门已经有明确维护责任。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>从两个视角看</h2>
+      <div class="two-col">
+        <div class="panel">
+          <span class="tag amber">设计师视角</span>
+          <h3>Proposal 2 更自然</h3>
+          <p>设计师日常更关心“这是谁负责的”。把京东视频放到综合业务设计组、外卖放到本地生活服务设计部，维护责任更清楚，也更符合真实协作。</p>
+        </div>
+        <div class="panel">
+          <span class="tag amber">AI 视角</span>
+          <h3>Proposal 1 更直接</h3>
+          <p>AI 更关心“这是什么对象”。如果内容按子 APP、子品牌集中放，它更容易直接找到规则；如果按部门放，就必须依赖全局索引。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary">
       <h2>建议判断</h2>
-      <p>如果更重视设计师长期维护，Proposal 2 更贴近组织现实；但它必须配套全局索引，让 AI 按“对象类型 + owner + 路径”去找规则。</p>
+      <p>如果目标是长期让设计师顺手维护，Proposal 2 更贴近组织现实；如果选择 Proposal 2，就必须配套全局索引，让 AI 按对象类型调用，而不是在部门目录里盲找。</p>
     </section>
   </main>
 </body>
