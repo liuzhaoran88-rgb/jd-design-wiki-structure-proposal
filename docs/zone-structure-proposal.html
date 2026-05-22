@@ -394,6 +394,158 @@
       color: var(--green);
     }
 
+    .logic-diagram {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .logic-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .logic-title-row h3 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .logic-title-row p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .lane-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .lane {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 14px;
+      min-height: 210px;
+    }
+
+    .lane.blue {
+      background: var(--soft-blue);
+      border-color: #cfdcff;
+    }
+
+    .lane.green {
+      background: var(--soft-green);
+      border-color: #c9eadc;
+    }
+
+    .lane.amber {
+      background: var(--soft-amber);
+      border-color: #f3d9a4;
+    }
+
+    .lane-title {
+      margin-bottom: 11px;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .node-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .node {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 11px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .node small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .owner-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .owner-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 16px;
+      min-height: 190px;
+    }
+
+    .owner-card strong {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .owner-card .node {
+      border-color: #c9eadc;
+    }
+
+    .index-flow {
+      display: grid;
+      grid-template-columns: 1fr 44px 1fr 44px 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .index-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fbfcfd;
+      min-height: 150px;
+    }
+
+    .index-box.question {
+      background: var(--soft-blue);
+      border-color: #cfdcff;
+    }
+
+    .index-box.lookup {
+      background: var(--soft-amber);
+      border-color: #f3d9a4;
+    }
+
+    .index-box.target {
+      background: var(--soft-green);
+      border-color: #c9eadc;
+    }
+
+    .index-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .index-box span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
     .tag {
       display: inline-flex;
       align-items: center;
@@ -577,7 +729,10 @@
       .compare-grid,
       .decision-line,
       .base-strip,
-      .architecture-compare {
+      .architecture-compare,
+      .lane-grid,
+      .owner-grid,
+      .index-flow {
         grid-template-columns: 1fr;
       }
 
@@ -688,85 +843,137 @@
 
     <section>
       <h2>Proposal 1：按对象类型建 Zone</h2>
-      <p class="section-note">这套方案把“子 APP”和“子品牌”当成两类独立知识对象来管理。</p>
-      <div class="two-col">
-        <div class="panel">
-          <span class="tag blue">结构</span>
-          <h3>目录更像知识分类</h3>
-          <ul class="list">
-            <li>Design 基础：主 APP 品牌规范</li>
-            <li>子 APP Zone：京东视频、京东秒杀、京东直播</li>
-            <li>子品牌 Zone：频道品牌、权益/机制品牌、线下品牌书</li>
-          </ul>
+      <p class="section-note">结构逻辑：先判断对象类型，再进对应 Zone。同类内容集中放。</p>
+      <div class="logic-diagram">
+        <div class="logic-title-row">
+          <div>
+            <span class="tag blue">知识分类视角</span>
+            <h3>一类对象，一个入口</h3>
+          </div>
+          <span class="count-badge">7 Zone</span>
         </div>
-        <div class="panel">
-          <span class="tag blue">核心逻辑</span>
-          <h3>同类知识集中放</h3>
-          <p>AI 和设计师都能快速知道“这是子 APP”或“这是子品牌”，然后进入对应 Zone。这个结构对规则聚合比较友好，但和真实团队 owner 可能不完全一致。</p>
+
+        <div class="lane-grid">
+          <div class="lane">
+            <div class="lane-title">主 APP 基础</div>
+            <div class="node-list">
+              <div class="node">Design 基础 Zone<small>主 APP 品牌规范</small></div>
+              <div class="node">京东红 / Joy / CTA<small>全局基础资产</small></div>
+              <div class="node">基础 token / 组件<small>被其他对象继承</small></div>
+            </div>
+          </div>
+
+          <div class="lane blue">
+            <div class="lane-title">子 APP</div>
+            <div class="node-list">
+              <div class="node">子 APP Zone<small>新增独立 Zone</small></div>
+              <div class="node">京东视频 / 京东秒杀 / 京东直播<small>产品载体规则集中</small></div>
+              <div class="node">App Profile / 页面规则<small>按子 APP 维护</small></div>
+            </div>
+          </div>
+
+          <div class="lane amber">
+            <div class="lane-title">子品牌</div>
+            <div class="node-list">
+              <div class="node">子品牌 Zone<small>新增独立 Zone</small></div>
+              <div class="node">PLUS / 京东超市 / 新品<small>频道与权益品牌</small></div>
+              <div class="node">线下品牌书 / 活动品牌<small>品牌资产规则集中</small></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section>
       <h2>Proposal 2：按组织 owner 存放</h2>
-      <p class="section-note">这套方案把组织架构 Zone 理解为设计部门的独立空间。谁负责，谁维护。</p>
-      <div class="two-col">
-        <div class="panel">
-          <span class="tag green">结构</span>
-          <h3>目录更像维护责任</h3>
-          <ul class="list">
-            <li>品牌与营销设计部：子品牌、品牌书、活动品牌、线下品牌资产</li>
-            <li>综合业务设计组：京东视频 APP、相关内容产品模块</li>
-            <li>本地生活服务设计部：外卖 APP、到家服务、本地生活场景</li>
-          </ul>
+      <p class="section-note">结构逻辑：内容不按类型另起 Zone，而是进入负责它的设计部门空间。目录表达 owner。</p>
+      <div class="logic-diagram">
+        <div class="logic-title-row">
+          <div>
+            <span class="tag green">组织 owner 视角</span>
+            <h3>一个 owner，一个维护空间</h3>
+          </div>
+          <span class="count-badge">5 Zone</span>
         </div>
-        <div class="panel">
-          <span class="tag green">核心逻辑</span>
-          <h3>目录服务设计师，索引服务 AI</h3>
-          <p>设计师按部门空间维护内容；AI 不直接按部门猜规则，而是通过全局索引识别对象类型、owner、路径和调用条件。</p>
+
+        <div class="owner-grid">
+          <div class="owner-card">
+            <strong>品牌与营销设计部</strong>
+            <div class="node-list">
+              <div class="node">子品牌</div>
+              <div class="node">品牌书 / 活动品牌</div>
+              <div class="node">线下品牌资产</div>
+            </div>
+          </div>
+
+          <div class="owner-card">
+            <strong>综合业务设计组</strong>
+            <div class="node-list">
+              <div class="node">京东视频 APP</div>
+              <div class="node">相关内容产品模块</div>
+              <div class="node">视频流 / 直播间页面</div>
+            </div>
+          </div>
+
+          <div class="owner-card">
+            <strong>本地生活服务设计部</strong>
+            <div class="node-list">
+              <div class="node">外卖 APP</div>
+              <div class="node">到家服务</div>
+              <div class="node">本地生活场景</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section>
       <h2>Proposal 2 的关键：全局索引</h2>
-      <p class="section-note">全局索引可以理解成“查书目录”。正文放在各部门空间，索引告诉 AI 去哪里找。</p>
-      <div class="map">
-        <div class="map-block org">
-          <strong>物理存放：组织架构 Zone</strong>
-          <span>内容放在各设计部门空间里，例如品牌与营销设计部、综合业务设计组、本地生活服务设计部。</span>
+      <p class="section-note">Proposal 2 多了一层组织结构，所以必须让 AI 先查一张“总目录表”。</p>
+      <div class="index-flow">
+        <div class="index-box question">
+          <strong>AI 要找规则</strong>
+          <span>例：我要生成京东视频 APP 页面，或者检查 PLUS 规则。</span>
         </div>
         <div class="arrow">→</div>
-        <div class="map-block index">
-          <strong>逻辑调用：全局索引</strong>
-          <span>AI 先查索引，知道这个对象是子 APP、子品牌、频道品牌还是页面规则，再跳到真实文件路径。</span>
+        <div class="index-box lookup">
+          <strong>先查全局索引</strong>
+          <span>索引告诉 AI：它是什么类型、谁维护、文件在哪里。</span>
+        </div>
+        <div class="arrow">→</div>
+        <div class="index-box target">
+          <strong>再跳到部门空间</strong>
+          <span>京东视频去综合业务设计组；PLUS 去品牌与营销设计部。</span>
         </div>
       </div>
-      <div class="panel" style="margin-top:16px;">
-        <pre><code>ai_index:
-  sub_apps:
-    - id: jd-video-app
-      name: 京东视频 APP
-      owner_dept: 综合业务设计组
-      path: org/comprehensive-business/jd-video/
 
-    - id: jd-takeaway-app
-      name: 外卖 APP
-      owner_dept: 本地生活服务设计部
-      path: org/local-life/takeaway/
-
-  sub_brands:
-    - id: jd-plus
-      name: PLUS
-      owner_dept: 品牌与营销设计部
-      type: membership_brand
-      path: org/brand-marketing/plus/
-
-    - id: jd-supermarket
-      name: 京东超市
-      owner_dept: 品牌与营销设计部
-      type: channel_brand
-      path: org/brand-marketing/jd-supermarket/</code></pre>
+      <div class="logic-diagram" style="margin-top:16px;">
+        <div class="lane-grid">
+          <div class="lane blue">
+            <div class="lane-title">索引项：京东视频 APP</div>
+            <div class="node-list">
+              <div class="node">类型：子 APP</div>
+              <div class="node">owner：综合业务设计组</div>
+              <div class="node">路径：组织架构 / 综合业务设计组 / 京东视频</div>
+            </div>
+          </div>
+          <div class="lane green">
+            <div class="lane-title">索引项：PLUS</div>
+            <div class="node-list">
+              <div class="node">类型：权益/机制品牌</div>
+              <div class="node">owner：品牌与营销设计部</div>
+              <div class="node">路径：组织架构 / 品牌与营销设计部 / PLUS</div>
+            </div>
+          </div>
+          <div class="lane amber">
+            <div class="lane-title">索引项：外卖 APP</div>
+            <div class="node-list">
+              <div class="node">类型：子 APP</div>
+              <div class="node">owner：本地生活服务设计部</div>
+              <div class="node">路径：组织架构 / 本地生活服务设计部 / 外卖</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
