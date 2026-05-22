@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>品牌与子 APP Zone 结构优化方案</title>
+  <title>子 APP 与子品牌知识结构方案对比</title>
   <style>
     :root {
       --red: #fa2c19;
@@ -34,7 +34,7 @@
     }
 
     .page {
-      max-width: 1120px;
+      max-width: 1160px;
       margin: 0 auto;
       padding: 48px 24px 64px;
     }
@@ -57,7 +57,7 @@
 
     h1 {
       margin: 0;
-      max-width: 900px;
+      max-width: 920px;
       font-size: 44px;
       line-height: 1.12;
       letter-spacing: 0;
@@ -73,7 +73,7 @@
 
     .sublead {
       margin: 10px 0 0;
-      max-width: 860px;
+      max-width: 920px;
       color: var(--muted);
       font-size: 16px;
     }
@@ -96,61 +96,86 @@
 
     .section-note {
       margin: -6px 0 16px;
-      max-width: 820px;
+      max-width: 900px;
       color: var(--muted);
       font-size: 15px;
     }
 
-    .zone-grid {
+    .three-col,
+    .two-col {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
     }
 
-    .zone {
+    .three-col { grid-template-columns: 1fr 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr 1fr; }
+
+    .panel,
+    .proposal,
+    .summary {
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 22px;
-      min-height: 330px;
     }
 
-    .zone.design { border-top: 4px solid var(--red); }
-    .zone.apps { border-top: 4px solid var(--blue); }
-    .zone.brand { border-top: 4px solid var(--green); }
+    .proposal.one { border-top: 4px solid var(--blue); }
+    .proposal.two { border-top: 4px solid var(--green); }
+    .panel.base { border-top: 4px solid var(--red); }
 
     .tag {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       min-height: 28px;
       padding: 4px 10px;
       border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
       background: #f1f3f6;
       color: #343b48;
+      font-size: 12px;
+      font-weight: 800;
     }
 
-    .design .tag { background: var(--soft-red); color: var(--red); }
-    .apps .tag { background: var(--soft-blue); color: var(--blue); }
-    .brand .tag { background: var(--soft-green); color: var(--green); }
+    .tag.red { background: var(--soft-red); color: var(--red); }
+    .tag.blue { background: var(--soft-blue); color: var(--blue); }
+    .tag.green { background: var(--soft-green); color: var(--green); }
+    .tag.amber { background: var(--soft-amber); color: var(--amber); }
 
-    .zone h3 {
-      margin-top: 16px;
-      font-size: 22px;
+    .proposal h3,
+    .panel h3 {
+      margin-top: 14px;
     }
 
-    .zone p {
+    .proposal p,
+    .panel p {
       margin: 0;
       color: var(--muted);
       font-size: 14px;
     }
 
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #fbfcfd;
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
     .list {
       display: grid;
-      gap: 8px;
-      margin: 18px 0 0;
+      gap: 9px;
+      margin: 16px 0 0;
       padding: 0;
       list-style: none;
     }
@@ -158,102 +183,47 @@
     .list li {
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 10px 12px;
+      padding: 11px 12px;
       background: #fbfcfd;
       color: var(--text);
       font-size: 13px;
       font-weight: 700;
     }
 
-    .diagram {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 24px;
-    }
-
-    .flow {
+    .map {
       display: grid;
-      grid-template-columns: 1fr 44px 1fr 44px 1fr 44px 1fr;
+      grid-template-columns: 1fr 44px 1fr;
+      gap: 10px;
       align-items: stretch;
-      gap: 8px;
     }
 
-    .flow-card {
-      min-height: 132px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 16px;
-      background: #fbfcfd;
-    }
-
-    .flow-card strong {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-
-    .flow-card span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .flow-card.base { background: var(--soft-red); border-color: #ffc7bf; }
-    .flow-card.app { background: var(--soft-blue); border-color: #cfdcff; }
-    .flow-card.portfolio { background: var(--soft-green); border-color: #c9eadc; }
-    .flow-card.page { background: var(--soft-amber); border-color: #f3d9a4; }
-
-    .relation-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .relation-card {
-      min-height: 142px;
+    .map-block {
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 18px;
       background: #fbfcfd;
+      min-height: 145px;
     }
 
-    .relation-card.main {
-      background: var(--soft-red);
-      border-color: #ffc7bf;
-    }
-
-    .relation-card.sub {
-      background: var(--soft-blue);
-      border-color: #cfdcff;
-    }
-
-    .relation-card.overlay {
+    .map-block.org {
       background: var(--soft-green);
       border-color: #c9eadc;
     }
 
-    .relation-card.scene {
+    .map-block.index {
       background: var(--soft-amber);
       border-color: #f3d9a4;
     }
 
-    .relation-card strong {
+    .map-block strong {
       display: block;
       margin-bottom: 8px;
       font-size: 17px;
     }
 
-    .relation-card span {
+    .map-block span {
       color: var(--muted);
       font-size: 13px;
-    }
-
-    .relation-plus {
-      margin: 14px 0;
-      color: #98a1ae;
-      font-size: 22px;
-      font-weight: 800;
-      text-align: center;
     }
 
     .arrow {
@@ -265,17 +235,38 @@
       font-weight: 800;
     }
 
-    .two-col {
-      display: grid;
-      grid-template-columns: minmax(0, .96fr) minmax(0, 1.04fr);
-      gap: 16px;
-    }
-
-    .panel {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 22px;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #fbfcfd;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    td:first-child {
+      width: 150px;
+      color: var(--ink);
+      font-weight: 800;
     }
 
     pre {
@@ -293,114 +284,25 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
 
-    .cases {
-      display: grid;
-      gap: 10px;
-    }
-
-    .case {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 14px;
-      background: #fbfcfd;
-    }
-
-    .case strong {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 14px;
-    }
-
-    .case span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .overview {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 22px;
-    }
-
-    .overview-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, .72fr);
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .overview-block {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 18px;
-      background: #fbfcfd;
-    }
-
-    .overview-block.new {
-      background: var(--soft-blue);
-      border-color: #cfdcff;
-    }
-
-    .overview-block h3 {
-      margin: 0 0 12px;
-      font-size: 18px;
-    }
-
-    .zone-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .zone-pill {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: 5px 10px;
-      border-radius: 999px;
-      background: #fff;
-      border: 1px solid var(--line);
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .overview-block.new .zone-pill {
-      border-color: #b9ccff;
-      color: var(--blue);
-    }
-
     .summary {
-      background: var(--panel);
       border: 1px solid #ffc7bf;
       border-left: 6px solid var(--red);
-      border-radius: 8px;
-      padding: 22px 24px;
     }
 
     .summary h2 { color: var(--red); }
 
     .summary p {
       margin: 0;
-      max-width: 920px;
+      max-width: 940px;
       color: var(--text);
       font-size: 18px;
       font-weight: 800;
     }
 
-    @media (max-width: 960px) {
-      .zone-grid,
+    @media (max-width: 980px) {
+      .three-col,
       .two-col,
-      .overview-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .flow {
-        grid-template-columns: 1fr;
-      }
-
-      .relation-grid {
+      .map {
         grid-template-columns: 1fr;
       }
 
@@ -415,301 +317,201 @@
       .hero { padding: 26px 22px; }
       h1 { font-size: 32px; }
       .lead { font-size: 18px; }
+      table { min-width: 760px; }
+      .table-wrap { overflow-x: auto; }
     }
   </style>
 </head>
 <body>
   <main class="page">
     <header class="hero">
-      <p class="eyebrow">ZONE STRUCTURE PROPOSAL</p>
-      <h1>品牌与子 APP 的 Zone 拆分方案</h1>
-      <p class="lead">先区分三类对象：主 APP 基础、子 APP 载体、非主 APP 品牌资产。</p>
-      <p class="sublead">这样读：主 APP 的品牌规范留在 Design 基础；京东视频、京东秒杀、京东直播放进子 APP Zone；频道品牌、权益/机制品牌、线下品牌书放进非主 APP 品牌 Zone。</p>
+      <p class="eyebrow">PROPOSAL COMPARISON</p>
+      <h1>子 APP 与子品牌知识结构：两种方案对比</h1>
+      <p class="lead">Proposal 1 是按对象类型新增 Zone；Proposal 2 是放回组织架构 Zone，由设计部门空间负责维护。</p>
+      <p class="sublead">这里重点比较两个问题：设计师长期维护是否顺手，AI 生成 / 检查时是否容易找到正确规则。</p>
     </header>
 
     <section>
-      <h2>整体框架全貌</h2>
-      <p class="section-note">原来的 5 大 Zone 保持不变；这次只是新增 2 个独立 Zone，用来承接子 APP 和非主 APP 品牌资产。</p>
-      <div class="overview">
-        <div class="overview-grid">
-          <div class="overview-block">
-            <h3>原有 5 大 Zone</h3>
-            <div class="zone-pills">
-              <span class="zone-pill">Design 知识</span>
-              <span class="zone-pill">Design 基础</span>
-              <span class="zone-pill">AI 机制</span>
-              <span class="zone-pill">组织架构</span>
-              <span class="zone-pill">横向专项</span>
-            </div>
+      <h2>大结构对比</h2>
+      <p class="section-note">两套方案都保留原来的 5 大 Zone，区别在于子 APP 和子品牌放在哪里。</p>
+      <div class="three-col">
+        <article class="panel base">
+          <span class="tag red">共同基础</span>
+          <h3>原有 5 大 Zone 不变</h3>
+          <p>Design 知识、Design 基础、AI 机制、组织架构、横向专项继续作为 wiki 的主框架。</p>
+          <div class="pills">
+            <span class="pill">Design 知识</span>
+            <span class="pill">Design 基础</span>
+            <span class="pill">AI 机制</span>
+            <span class="pill">组织架构</span>
+            <span class="pill">横向专项</span>
           </div>
-          <div class="overview-block new">
-            <h3>新增 2 个 Zone</h3>
-            <div class="zone-pills">
-              <span class="zone-pill">子 APP</span>
-              <span class="zone-pill">非主 APP 品牌</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        </article>
 
-    <section>
-      <h2>三个 Zone 怎么读</h2>
-      <p class="section-note">每个 Zone 只回答一个问题，先判断对象类型，再进入对应目录。</p>
-      <div class="zone-grid">
-        <article class="zone design">
-          <span class="tag">Design 基础 Zone</span>
-          <h3>主 APP 品牌规范</h3>
-          <p>回答：主 APP 的默认品牌和 UI 底座是什么？</p>
+        <article class="proposal one">
+          <span class="tag blue">Proposal 1</span>
+          <h3>新增独立 Zone</h3>
+          <p>子 APP 和子品牌从原有框架里抽出来，成为独立的知识区。</p>
           <ul class="list">
-            <li>主 APP 品牌表现</li>
-            <li>京东红 / Joy / 价格与 CTA</li>
-            <li>基础 token / 基础组件</li>
-            <li>APP 大改版品牌语言</li>
+            <li>新增：子 APP Zone</li>
+            <li>新增：子品牌 Zone</li>
+            <li>主 APP 品牌仍在 Design 基础</li>
           </ul>
         </article>
 
-        <article class="zone apps">
-          <span class="tag">子 APP Zone</span>
-          <h3>产品载体矩阵</h3>
-          <p>回答：主 APP 之外的产品载体怎么继承和差异化？</p>
+        <article class="proposal two">
+          <span class="tag green">Proposal 2</span>
+          <h3>放回组织架构 Zone</h3>
+          <p>子 APP 和子品牌不新增 Zone，而是放到负责它们的设计部门空间里。</p>
           <ul class="list">
-            <li>京东视频</li>
-            <li>京东秒杀</li>
-            <li>京东直播</li>
-            <li>小程序 / PC 端扩展</li>
-          </ul>
-        </article>
-
-        <article class="zone brand">
-          <span class="tag">非主 APP 品牌 Zone</span>
-          <h3>品牌资产矩阵</h3>
-          <p>回答：页面里出现的其他品牌资产应该怎么表达？</p>
-          <ul class="list">
-            <li>频道品牌：京东超市 / 新品</li>
-            <li>权益/机制品牌：PLUS</li>
-            <li>活动品牌资产</li>
-            <li>线下品牌书 / 空间物料</li>
+            <li>品牌与营销设计部：子品牌</li>
+            <li>综合业务设计组：京东视频 APP</li>
+            <li>本地生活服务设计部：外卖 APP</li>
           </ul>
         </article>
       </div>
     </section>
 
     <section>
-      <h2>核心关系</h2>
-      <div class="diagram">
-        <div class="relation-grid">
-          <div class="relation-card main">
-            <strong>主 APP 路径</strong>
-            <span>当前对象是主 APP 页面时，直接使用 Design 基础里的主 APP 品牌、基础 token、通用组件和改版语言。</span>
-          </div>
-          <div class="relation-card sub">
-            <strong>子 APP 路径</strong>
-            <span>当前对象是京东视频、京东秒杀、京东直播等子 APP 时，进入对应子 APP Profile，说明继承、差异和版本规则。</span>
-          </div>
+      <h2>Proposal 1：按对象类型建 Zone</h2>
+      <p class="section-note">这套方案把“子 APP”和“子品牌”当成两类独立知识对象来管理。</p>
+      <div class="two-col">
+        <div class="panel">
+          <span class="tag blue">结构</span>
+          <h3>目录更像知识分类</h3>
+          <ul class="list">
+            <li>Design 基础：主 APP 品牌规范</li>
+            <li>子 APP Zone：京东视频、京东秒杀、京东直播</li>
+            <li>子品牌 Zone：频道品牌、权益/机制品牌、线下品牌书</li>
+          </ul>
         </div>
-
-        <div class="relation-plus">+</div>
-
-        <div class="relation-grid">
-          <div class="relation-card overlay">
-            <strong>叠加品牌资产</strong>
-            <span>如果页面出现频道品牌、权益/机制品牌、活动品牌、线下品牌书，再从非主 APP 品牌 Zone 加载对应规则。</span>
-          </div>
-          <div class="relation-card scene">
-            <strong>落到页面场景</strong>
-            <span>最后结合首页、频道页、PDP、购物车、结算、直播间、大促页等具体页面规则。</span>
-          </div>
+        <div class="panel">
+          <span class="tag blue">核心逻辑</span>
+          <h3>同类知识集中放</h3>
+          <p>AI 和设计师都能快速知道“这是子 APP”或“这是子品牌”，然后进入对应 Zone。这个结构对规则聚合比较友好，但和真实团队 owner 可能不完全一致。</p>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>目录结构建议</h2>
+      <h2>Proposal 2：按组织 owner 存放</h2>
+      <p class="section-note">这套方案把组织架构 Zone 理解为设计部门的独立空间。谁负责，谁维护。</p>
       <div class="two-col">
         <div class="panel">
-          <pre><code>jd-design-system-md-v16/
-├── foundations/                     # Design 基础 Zone
-│   ├── brand/
-│   │   ├── main-app-brand.md
-│   │   ├── jd-red.md
-│   │   ├── joy.md
-│   │   ├── price-and-cta.md
-│   │   └── brand-tokens.yaml
-│   ├── tokens/
-│   └── components-base/
-│
-├── sub-apps/                        # 子 APP Zone
-│   ├── README.md
-│   ├── shared-rules.md
-│   ├── jd-video/
-│   ├── jd-seckill/
-│   └── jd-live/
-│
-├── brand-portfolio/                 # 非主 APP 品牌 Zone
-│   ├── README.md
-│   ├── brand-taxonomy.md
-│   ├── channel-brands/
-│   │   ├── jd-supermarket/
-│   │   └── new-products/
-│   ├── program-brands/
-│   │   └── jd-plus/
-│   ├── offline-brand-books/
-│   └── ai-schema.yaml
-│
-└── product-architecture/
-    └── pages/</code></pre>
+          <span class="tag green">结构</span>
+          <h3>目录更像维护责任</h3>
+          <ul class="list">
+            <li>品牌与营销设计部：子品牌、品牌书、活动品牌、线下品牌资产</li>
+            <li>综合业务设计组：京东视频 APP、相关内容产品模块</li>
+            <li>本地生活服务设计部：外卖 APP、到家服务、本地生活场景</li>
+          </ul>
         </div>
-
         <div class="panel">
-          <h3>边界规则</h3>
-          <div class="cases">
-            <div class="case">
-              <strong>主 APP 品牌变化</strong>
-              <span>回到 <code>foundations/brand</code>，例如京东红、Joy、价格色、主 CTA、APP 改版视觉语言。</span>
-            </div>
-            <div class="case">
-              <strong>子 APP 页面差异</strong>
-              <span>写在 <code>sub-apps</code>，例如京东直播的直播间结构、京东秒杀的高促销密度、京东视频的内容流规则。</span>
-            </div>
-            <div class="case">
-              <strong>页面里的品牌资产</strong>
-              <span>写在 <code>brand-portfolio</code>，例如频道品牌里的京东超市 / 新品、权益/机制品牌里的 PLUS、以及线下品牌书的视觉表达。</span>
-            </div>
-            <div class="case">
-              <strong>具体页面落地</strong>
-              <span>写在 <code>product-architecture/pages</code>，只描述页面如何组合这些规则，不重新定义品牌。</span>
-            </div>
-          </div>
+          <span class="tag green">核心逻辑</span>
+          <h3>目录服务设计师，索引服务 AI</h3>
+          <p>设计师按部门空间维护内容；AI 不直接按部门猜规则，而是通过全局索引识别对象类型、owner、路径和调用条件。</p>
         </div>
       </div>
     </section>
 
     <section>
-      <h2>AI 调用方式</h2>
-      <div class="two-col">
-        <div class="panel">
-          <pre><code>rule_selector:
-  first_decision:
-    app_type: main_app | sub_app
-
-  app_rules:
-    main_app: foundations/brand
-    sub_app: sub-apps/{app_profile}
-
-  overlays:
-    - brand-portfolio/{brand_entity}
-    - product-architecture/pages/{page}
-
-  inputs:
-    - app_id
-    - platform
-    - page_type
-    - brand_entities
-    - campaign
-    - app_version
-
-  outputs:
-    - generation_rules
-    - visual_constraints
-    - review_checklist</code></pre>
+      <h2>Proposal 2 的关键：全局索引</h2>
+      <p class="section-note">全局索引可以理解成“查书目录”。正文放在各部门空间，索引告诉 AI 去哪里找。</p>
+      <div class="map">
+        <div class="map-block org">
+          <strong>物理存放：组织架构 Zone</strong>
+          <span>内容放在各设计部门空间里，例如品牌与营销设计部、综合业务设计组、本地生活服务设计部。</span>
         </div>
-
-        <div class="panel">
-          <h3>典型组合</h3>
-          <div class="cases">
-            <div class="case">
-              <strong>主 APP PDP + PLUS + 京东超市</strong>
-              <span>主 APP 品牌基础 + PLUS 权益/机制品牌规则 + 京东超市频道品牌规则 + PDP 页面规则。</span>
-            </div>
-            <div class="case">
-              <strong>京东直播 APP + 新品首发</strong>
-              <span>京东直播 App Profile + 可继承基础 token / 组件 + 新品频道品牌规则 + 直播间页面规则。</span>
-            </div>
-            <div class="case">
-              <strong>京东秒杀 APP + 大促会场</strong>
-              <span>京东秒杀 App Profile + 可继承基础 token / 组件 + 活动品牌资产 + 会场页规则。</span>
-            </div>
-            <div class="case">
-              <strong>线下品牌书 + APP 引流页</strong>
-              <span>主 APP 品牌基础 + 线下品牌书规则 + 引流页规则，确保线上线下识别一致。</span>
-            </div>
-          </div>
+        <div class="arrow">→</div>
+        <div class="map-block index">
+          <strong>逻辑调用：全局索引</strong>
+          <span>AI 先查索引，知道这个对象是子 APP、子品牌、频道品牌还是页面规则，再跳到真实文件路径。</span>
         </div>
       </div>
-    </section>
-
-    <section>
-      <h2>优劣势评估</h2>
-      <p class="section-note">这个结构的价值在于边界更清楚，但前提是补好索引、分类和冲突优先级。</p>
-      <div class="two-col">
-        <div class="panel">
-          <h3>设计师维护视角</h3>
-          <div class="cases">
-            <div class="case">
-              <strong>优势：责任边界更清楚</strong>
-              <span>主 APP 基础、子 APP、非主 APP 品牌各有归属，设计师更容易判断内容该沉淀到哪里。</span>
-            </div>
-            <div class="case">
-              <strong>优势：减少重复维护</strong>
-              <span>子 APP 不需要复制主 APP 品牌规范，只写继承、差异和页面规则；品牌资产也不用散落在各页面里。</span>
-            </div>
-            <div class="case">
-              <strong>风险：需要理解对象类型</strong>
-              <span>设计师必须分清“产品载体”和“品牌资产”，例如京东秒杀是子 APP / 频道场景，京东超市和新品是频道品牌。</span>
-            </div>
-            <div class="case">
-              <strong>风险：跨 Zone 组合会变复杂</strong>
-              <span>一个页面可能同时涉及主 APP、PLUS、京东超市和大促活动，需要清楚每类规则从哪里来。</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h3>AI 调用视角</h3>
-          <div class="cases">
-            <div class="case">
-              <strong>优势：加载顺序稳定</strong>
-              <span>AI 先判断当前是主 APP 还是子 APP，再叠加非主 APP 品牌和页面场景规则。</span>
-            </div>
-            <div class="case">
-              <strong>优势：更适合生成和检查</strong>
-              <span>AI 能判断问题属于主 APP 基础、子 APP 差异、品牌资产使用，还是页面组合冲突。</span>
-            </div>
-            <div class="case">
-              <strong>风险：必须有结构化字段</strong>
-              <span>需要标注 <code>app_id</code>、<code>page_type</code>、<code>brand_entities</code>、<code>campaign</code>、<code>app_version</code>，否则 AI 不知道该加载哪些规则。</span>
-            </div>
-            <div class="case">
-              <strong>风险：冲突优先级要写清</strong>
-              <span>当 PLUS、频道品牌、大促氛围和页面转化规则同时出现时，必须明确谁优先、谁让位。</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="panel" style="margin-top:16px;">
-        <h3>建议补齐的治理件</h3>
-        <div class="cases">
-          <div class="case">
-            <strong><code>taxonomy.md</code></strong>
-            <span>定义对象类型：主 APP 基础、子 APP、频道品牌、权益/机制品牌、活动品牌、线下品牌书。</span>
-          </div>
-          <div class="case">
-            <strong><code>rule-selector.yaml</code></strong>
-            <span>定义 AI 根据 app_id、page_type、brand_entities 等字段如何加载规则。</span>
-          </div>
-          <div class="case">
-            <strong><code>conflict-priority.md</code></strong>
-            <span>定义多品牌、多活动、多页面规则冲突时的优先级。</span>
-          </div>
+        <pre><code>ai_index:
+  sub_apps:
+    - id: jd-video-app
+      name: 京东视频 APP
+      owner_dept: 综合业务设计组
+      path: org/comprehensive-business/jd-video/
+
+    - id: jd-takeaway-app
+      name: 外卖 APP
+      owner_dept: 本地生活服务设计部
+      path: org/local-life/takeaway/
+
+  sub_brands:
+    - id: jd-plus
+      name: PLUS
+      owner_dept: 品牌与营销设计部
+      type: membership_brand
+      path: org/brand-marketing/plus/
+
+    - id: jd-supermarket
+      name: 京东超市
+      owner_dept: 品牌与营销设计部
+      type: channel_brand
+      path: org/brand-marketing/jd-supermarket/</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>两个方案的优劣势</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>Proposal 1：新增独立 Zone</th>
+              <th>Proposal 2：放回组织架构 Zone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>设计师维护</td>
+              <td>同类知识集中，结构清楚；但设计师可能要离开自己的部门空间去维护。</td>
+              <td>最贴近真实 owner，谁负责谁维护；但同类对象会散落在不同部门空间。</td>
+            </tr>
+            <tr>
+              <td>AI 调用</td>
+              <td>AI 直接按对象类型找规则，路径短，召回更自然。</td>
+              <td>AI 会多一层组织结构，需要依赖全局索引和 frontmatter 才好调用。</td>
+            </tr>
+            <tr>
+              <td>治理成本</td>
+              <td>需要维护新增 Zone 的 owner 和边界，避免和组织架构重复。</td>
+              <td>需要维护全局索引、标签体系和内容元信息，避免 AI 漏召回。</td>
+            </tr>
+            <tr>
+              <td>适合场景</td>
+              <td>更适合 AI-first 的知识结构，或者希望统一管理所有子 APP / 子品牌规则。</td>
+              <td>更适合组织协作优先的 wiki，尤其当各部门已经有明确维护责任。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>从两个视角看</h2>
+      <div class="two-col">
+        <div class="panel">
+          <span class="tag amber">设计师视角</span>
+          <h3>Proposal 2 更自然</h3>
+          <p>设计师日常更关心“这是谁负责的”。把京东视频放到综合业务设计组、外卖放到本地生活服务设计部，维护责任更清楚，也更符合真实协作。</p>
+        </div>
+        <div class="panel">
+          <span class="tag amber">AI 视角</span>
+          <h3>Proposal 1 更直接</h3>
+          <p>AI 更关心“这是什么对象”。如果内容按子 APP、子品牌集中放，它更容易直接找到规则；如果按部门放，就必须依赖全局索引。</p>
         </div>
       </div>
     </section>
 
     <section class="summary">
-      <h2>讨论结论</h2>
-      <p>这个框架的核心，是把“主 APP 基础资产”“子 APP 产品载体”“非主 APP 品牌资产”拆成三个独立治理区，再通过页面场景和 AI 规则选择器组合使用。</p>
+      <h2>建议判断</h2>
+      <p>如果目标是长期让设计师顺手维护，Proposal 2 更贴近组织现实；如果选择 Proposal 2，就必须配套全局索引，让 AI 按对象类型调用，而不是在部门目录里盲找。</p>
     </section>
   </main>
 </body>
